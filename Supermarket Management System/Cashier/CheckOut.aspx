@@ -22,7 +22,7 @@
         <asp:Label ID="Label3" runat="server" Style="z-index: 105; left: 59px; position: absolute;
             top: 56px" Text="商品ID"></asp:Label>
         <asp:TextBox ID="tbxEmployeeID" runat="server" Style="z-index: 106; left: 126px; position: absolute;
-            top: 228px"></asp:TextBox>
+            top: 228px" ReadOnly="True"></asp:TextBox>
         <asp:Label ID="Label4" runat="server" Style="z-index: 107; left: 55px; position: absolute;
             top: 233px" Text="收银员ID"></asp:Label>
         <asp:TextBox ID="TextBox3" runat="server" Style="z-index: 108; left: 124px; position: absolute;
