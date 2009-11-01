@@ -19,7 +19,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
         {
             //初始化付款方式
             initDealWay();
-            
+            tbxEmployeeID.Text = (string) Session["EmployeeID"];
             initSellDate();
             btnInsert.Visible = true;
         }
