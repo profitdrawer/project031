@@ -16,14 +16,18 @@ public partial class Cashier_cashier : System.Web.UI.Page
 
     private static DataTable goodsList;
 
+    private void InitPage()
+    {
+        InitGoodsListTableSchema();
+        InitDealWay();
+        InitSellDate();
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            initGoodsListTableSchema();
-            initDealWay();
-            initSellDate();
-            btnInsert.Visible = true;
+            InitPage();
         }
         gvBuyGoods.DataSource = goodsList;
         gvBuyGoods.DataBind();
@@ -33,7 +37,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
     /// <summary>
     /// 初始化购物单表的Schema
     /// </summary>
-    private void initGoodsListTableSchema()
+    private void InitGoodsListTableSchema()
     {
         // 初始化goodsListColumns的schema
         goodsList = new DataTable();
@@ -47,7 +51,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
     /// <summary>
     /// 初始化当前时间
     /// </summary>
-    private void initSellDate()
+    private void InitSellDate()
     {
         tbxSellDate.Text = DateTime.Now.ToString();
     }
@@ -55,7 +59,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
     /// <summary>
     /// 初始化付款方式
     /// </summary>
-    private void initDealWay()
+    private void InitDealWay()
     {
         DrDpdealway.Items.Clear();
         DrDpdealway.Enabled = true;
@@ -136,6 +140,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
 
     protected void btnInsert_Click(object sender, EventArgs e)
     {
+        if (goodsList.Rows.Count == 0) return;
 
         SqlConnection objConnection = new SqlConnection(strConnect);
         SqlCommand objCommand = new SqlCommand("", objConnection);
@@ -171,6 +176,7 @@ public partial class Cashier_cashier : System.Web.UI.Page
             transaction.Commit();
             ifSucceedLabel.Text = "成功购买！";
             ClearAllTextBox();
+            InitPage();
         }
         catch (SqlException exp)
         {
