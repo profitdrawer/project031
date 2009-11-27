@@ -23,7 +23,7 @@
         <asp:GridView ID="gvMemberList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
             BorderWidth="2px" CellPadding="3" CellSpacing="1"
-            GridLines="None" Style="z-index: 103; left: 10px; position: absolute; top: 285px"
+            GridLines="None" Style="z-index: 103; left: 8px; position: absolute; top: 426px"
             Width="844px"  Height="1px" DataKeyNames="MemberID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
@@ -47,14 +47,11 @@
         <br />
         <asp:TextBox ID="TextBox3" runat="server" Style="left: 130px; position: relative;
             top: -62px"></asp:TextBox><br />
-        <asp:TextBox ID="TextBox8" runat="server" Style="left: 130px; position: relative;
-            top: -54px"></asp:TextBox><br />
-        <br />
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True"
-            AutoGenerateColumns="False" CellPadding="4" DataKeyNames="MemberID" DataSourceID="SqlDataSource3"
-            ForeColor="#333333" GridLines="None" Height="89px" Style="left: 6px; position: relative;
-            top: -53px" Width="904px">
-            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+        &nbsp;<asp:TextBox ID="TextBox8" runat="server" Style="left: 130px; position: relative;
+            top: -54px"></asp:TextBox>
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4"
+            DataKeyNames="MemberID" DataSourceID="SqlDataSource3" ForeColor="#333333" GridLines="None">
+            <RowStyle BackColor="#EFF3FB" />
             <Columns>
                 <asp:BoundField DataField="MemberID" HeaderText="MemberID" ReadOnly="True" SortExpression="MemberID" />
                 <asp:BoundField DataField="MemberName" HeaderText="MemberName" SortExpression="MemberName" />
@@ -68,53 +65,20 @@
                 <asp:BoundField DataField="ConsumerPoints" HeaderText="ConsumerPoints" SortExpression="ConsumerPoints" />
                 <asp:BoundField DataField="MemberMoreInfo" HeaderText="MemberMoreInfo" SortExpression="MemberMoreInfo" />
             </Columns>
-            <RowStyle BackColor="#EFF3FB" />
-            <EditRowStyle BackColor="#2461BF" />
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <EditRowStyle BackColor="#2461BF" />
             <AlternatingRowStyle BackColor="White" />
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:Supermarket Management SystemConnectionString5 %>"
-            DeleteCommand="DELETE FROM [Member] WHERE [MemberID] = @MemberID" InsertCommand="INSERT INTO [Member] ([MemberID], [MemberName], [Cardstate], [CardPwd], [MemberAddress], [MemberPhone], [EnrollDate], [AdvancePayment], [TotalCost], [ConsumerPoints], [MemberMoreInfo]) VALUES (@MemberID, @MemberName, @Cardstate, @CardPwd, @MemberAddress, @MemberPhone, @EnrollDate, @AdvancePayment, @TotalCost, @ConsumerPoints, @MemberMoreInfo)"
-            SelectCommand="SELECT * FROM [Member] WHERE (([MemberID] = @MemberID) AND ([MemberName] LIKE '%' + @MemberName + '%'))"
-            UpdateCommand="UPDATE [Member] SET [MemberName] = @MemberName, [Cardstate] = @Cardstate, [CardPwd] = @CardPwd, [MemberAddress] = @MemberAddress, [MemberPhone] = @MemberPhone, [EnrollDate] = @EnrollDate, [AdvancePayment] = @AdvancePayment, [TotalCost] = @TotalCost, [ConsumerPoints] = @ConsumerPoints, [MemberMoreInfo] = @MemberMoreInfo WHERE [MemberID] = @MemberID">
-            <DeleteParameters>
-                <asp:Parameter Name="MemberID" Type="String" />
-            </DeleteParameters>
-            <UpdateParameters>
-                <asp:Parameter Name="MemberName" Type="String" />
-                <asp:Parameter Name="Cardstate" Type="Boolean" />
-                <asp:Parameter Name="CardPwd" Type="String" />
-                <asp:Parameter Name="MemberAddress" Type="String" />
-                <asp:Parameter Name="MemberPhone" Type="String" />
-                <asp:Parameter Name="EnrollDate" Type="DateTime" />
-                <asp:Parameter Name="AdvancePayment" Type="Decimal" />
-                <asp:Parameter Name="TotalCost" Type="Decimal" />
-                <asp:Parameter Name="ConsumerPoints" Type="Int32" />
-                <asp:Parameter Name="MemberMoreInfo" Type="String" />
-                <asp:Parameter Name="MemberID" Type="String" />
-            </UpdateParameters>
-            <SelectParameters>
-                <asp:ControlParameter ControlID="TextBox3" Name="MemberID" PropertyName="Text" Type="String" />
-                <asp:ControlParameter ControlID="TextBox8" Name="MemberName" PropertyName="Text"
-                    Type="String" />
-            </SelectParameters>
-            <InsertParameters>
-                <asp:Parameter Name="MemberID" Type="String" />
-                <asp:Parameter Name="MemberName" Type="String" />
-                <asp:Parameter Name="Cardstate" Type="Boolean" />
-                <asp:Parameter Name="CardPwd" Type="String" />
-                <asp:Parameter Name="MemberAddress" Type="String" />
-                <asp:Parameter Name="MemberPhone" Type="String" />
-                <asp:Parameter Name="EnrollDate" Type="DateTime" />
-                <asp:Parameter Name="AdvancePayment" Type="Decimal" />
-                <asp:Parameter Name="TotalCost" Type="Decimal" />
-                <asp:Parameter Name="ConsumerPoints" Type="Int32" />
-                <asp:Parameter Name="MemberMoreInfo" Type="String" />
-            </InsertParameters>
-        </asp:SqlDataSource>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server"></asp:SqlDataSource>
+        <br />
+        <br />
+        &nbsp;
+        &nbsp;&nbsp;
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />
@@ -152,9 +116,45 @@
                 <asp:Parameter Name="MemberMoreInfo" Type="String" />
             </InsertParameters>
         </asp:SqlDataSource>
-        &nbsp;&nbsp;&nbsp;&nbsp;<br />
-        <br />
-        <br />
+        <asp:SqlDataSource ID="SqlDataSource3" CancelSelectOnNullParameter="False" runat="server" ConnectionString="<%$ ConnectionStrings:Supermarket Management SystemConnectionString5 %>"
+            DeleteCommand="DELETE FROM [Member] WHERE [MemberID] = @MemberID" InsertCommand="INSERT INTO [Member] ([MemberID], [MemberName], [Cardstate], [CardPwd], [MemberAddress], [MemberPhone], [EnrollDate], [AdvancePayment], [TotalCost], [ConsumerPoints], [MemberMoreInfo]) VALUES (@MemberID, @MemberName, @Cardstate, @CardPwd, @MemberAddress, @MemberPhone, @EnrollDate, @AdvancePayment, @TotalCost, @ConsumerPoints, @MemberMoreInfo)"
+            SelectCommand="SELECT * FROM [Member] WHERE (([MemberID] = @MemberID) OR ([MemberName] LIKE '%' + @MemberName + '%'))"
+            UpdateCommand="UPDATE [Member] SET [MemberName] = @MemberName, [Cardstate] = @Cardstate, [CardPwd] = @CardPwd, [MemberAddress] = @MemberAddress, [MemberPhone] = @MemberPhone, [EnrollDate] = @EnrollDate, [AdvancePayment] = @AdvancePayment, [TotalCost] = @TotalCost, [ConsumerPoints] = @ConsumerPoints, [MemberMoreInfo] = @MemberMoreInfo WHERE [MemberID] = @MemberID">
+            <DeleteParameters>
+                <asp:Parameter Name="MemberID" Type="String" />
+            </DeleteParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="MemberName" Type="String" />
+                <asp:Parameter Name="Cardstate" Type="Boolean" />
+                <asp:Parameter Name="CardPwd" Type="String" />
+                <asp:Parameter Name="MemberAddress" Type="String" />
+                <asp:Parameter Name="MemberPhone" Type="String" />
+                <asp:Parameter Name="EnrollDate" Type="DateTime" />
+                <asp:Parameter Name="AdvancePayment" Type="Decimal" />
+                <asp:Parameter Name="TotalCost" Type="Decimal" />
+                <asp:Parameter Name="ConsumerPoints" Type="Int32" />
+                <asp:Parameter Name="MemberMoreInfo" Type="String" />
+                <asp:Parameter Name="MemberID" Type="String" />
+            </UpdateParameters>
+            <SelectParameters>
+                <asp:ControlParameter ControlID="TextBox3" Name="MemberID" PropertyName="Text" Type="String" />
+                <asp:ControlParameter ControlID="TextBox8" Name="MemberName" PropertyName="Text"
+                    Type="String" />
+            </SelectParameters>
+            <InsertParameters>
+                <asp:Parameter Name="MemberID" Type="String" />
+                <asp:Parameter Name="MemberName" Type="String" />
+                <asp:Parameter Name="Cardstate" Type="Boolean" />
+                <asp:Parameter Name="CardPwd" Type="String" />
+                <asp:Parameter Name="MemberAddress" Type="String" />
+                <asp:Parameter Name="MemberPhone" Type="String" />
+                <asp:Parameter Name="EnrollDate" Type="DateTime" />
+                <asp:Parameter Name="AdvancePayment" Type="Decimal" />
+                <asp:Parameter Name="TotalCost" Type="Decimal" />
+                <asp:Parameter Name="ConsumerPoints" Type="Int32" />
+                <asp:Parameter Name="MemberMoreInfo" Type="String" />
+            </InsertParameters>
+        </asp:SqlDataSource>
         <br />
         <br />
         <br />

@@ -2,9 +2,9 @@ Bug 1 OK
 Bug 2.1 OK
 Bug 2.2
 Bug 2.3
-Bug 3.1
-Bug 3.2
-Bug 3.3
+Bug 3.1 OK
+Bug 3.2 OK
+Bug 3.3 OK
 Bug 4.1
 Bug 4.2
 Bug 4.3
@@ -20,3 +20,8 @@ Bug 8.1
 Bug 8.2
 Bug 9
 Bug 10
+
+对于Bug 3的说明：
+使用SqlDataSource自动生成SQL语句时，需要绑定SQL中某个参数到某个控件上，同时需要设置这个参数的DefaultValue，如果不设置DefaultValue则不能读出数据。对于Bug 3中的问题，如果不设置DefaultValue则不能读出数据，如果设置一个null值的话可能会出错，这时可以将以下参数加入到SqlDataSource中。
+CancelSelectOnNullParameter="false"
+参考：http://space.cnblogs.com/question/2715/

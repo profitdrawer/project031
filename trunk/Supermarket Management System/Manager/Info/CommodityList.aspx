@@ -25,7 +25,6 @@
             Width="844px"  Height="177px" DataKeyNames="GoodsID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
                 <asp:BoundField DataField="GoodsID" HeaderText="GoodsID" ReadOnly="True" SortExpression="GoodsID" />
                 <asp:BoundField DataField="GoodsName" HeaderText="GoodsName" SortExpression="GoodsName" />
                 <asp:BoundField DataField="SellingPrice" HeaderText="SellingPrice" SortExpression="SellingPrice" />
@@ -48,9 +47,9 @@
             runat="server" Style="left: 2px; position: relative; top: -38px"></asp:TextBox><br />
         <asp:TextBox ID="TextBox10" runat="server" Style="left: 128px; position: relative;
             top: -26px"></asp:TextBox><br />
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GoodsInfoConnectionString %>"
+        <asp:SqlDataSource CancelSelectOnNullParameter="false" ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GoodsInfoConnectionString %>"
             DeleteCommand="DELETE FROM [Commodity] WHERE [GoodsID] = @GoodsID" InsertCommand="INSERT INTO [Commodity] ([GoodsID], [GoodsName], [SellingPrice], [MemberPrice], [StockNum], [AlarmNum], [sellstate], [GoodsMoreInfo]) VALUES (@GoodsID, @GoodsName, @SellingPrice, @MemberPrice, @StockNum, @AlarmNum, @sellstate, @GoodsMoreInfo)"
-            SelectCommand="SELECT * FROM [Commodity] WHERE (([GoodsID] = @GoodsID) AND ([GoodsName] LIKE '%' + @GoodsName + '%') AND ([AlarmNum] = @AlarmNum))" UpdateCommand="UPDATE [Commodity] SET [GoodsName] = @GoodsName, [SellingPrice] = @SellingPrice, [MemberPrice] = @MemberPrice, [StockNum] = @StockNum, [AlarmNum] = @AlarmNum, [sellstate] = @sellstate, [GoodsMoreInfo] = @GoodsMoreInfo WHERE [GoodsID] = @GoodsID">
+            SelectCommand="SELECT * FROM [Commodity] WHERE (([GoodsID] = @GoodsID) OR ([GoodsName] LIKE '%' + @GoodsName + '%') OR ([AlarmNum] = @AlarmNum))" UpdateCommand="UPDATE [Commodity] SET [GoodsName] = @GoodsName, [SellingPrice] = @SellingPrice, [MemberPrice] = @MemberPrice, [StockNum] = @StockNum, [AlarmNum] = @AlarmNum, [sellstate] = @sellstate, [GoodsMoreInfo] = @GoodsMoreInfo WHERE [GoodsID] = @GoodsID" ProviderName="System.Data.SqlClient">
             <DeleteParameters>
                 <asp:Parameter Name="GoodsID" Type="String" />
             </DeleteParameters>
