@@ -10,24 +10,22 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <strong>员工信息列表<br />
+        <strong>&nbsp; &nbsp;&nbsp; 员工信息列表<br />
             <br />
         </strong>查询条件： &nbsp; &nbsp;员工编号：<br />
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 员工姓名： &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;员工姓名： &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp;
         <asp:Button ID="btnSearch" runat="server" Style="z-index: 102; left: 320px; position: absolute;
-            top: 58px" Text="Search"  />      
+            top: 48px" Text="Search"  />      
         <br />
         <asp:GridView ID="gvEmployeeList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
             BorderWidth="2px" CellPadding="3" CellSpacing="1"
-            GridLines="None" Style="z-index: 103; left: 12px; position: absolute; top: 274px"
-            Width="844px"  Height="1px" DataKeyNames="EmployeeID" DataSourceID="SqlDataSource1">
+            GridLines="None" Style="z-index: 103; left: 10px; position: absolute; top: 317px" DataKeyNames="EmployeeID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
                 <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" ReadOnly="True" SortExpression="EmployeeID" />
                 <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName" />
                 <asp:BoundField DataField="SysLoginPwd" HeaderText="SysLoginPwd" SortExpression="SysLoginPwd" />
@@ -42,14 +40,13 @@
             <PagerStyle BackColor="#C6C3C6" ForeColor="Black" HorizontalAlign="Right" />
             <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#E7E7FF" />
         </asp:GridView>
-        <asp:TextBox ID="TextBox10" runat="server" Style="left: 146px; position: relative;
-            top: -45px"></asp:TextBox><br />
-        <asp:TextBox ID="TextBox11" runat="server" Style="left: 147px; position: relative;
-            top: -39px"></asp:TextBox><br />
+        <asp:TextBox ID="boxEmpId" runat="server" Style="left: 159px; position: absolute;
+            top: 46px"></asp:TextBox><br />
+        <asp:TextBox ID="boxEmpName" runat="server" Style="left: 159px; position: absolute;
+            top: 73px"></asp:TextBox><br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4"
-            DataKeyNames="EmployeeID" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None"
-            Height="1px" Style="left: 2px; position: relative; top: -23px" Width="585px">
-            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            DataKeyNames="EmployeeID" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None">
+            <RowStyle BackColor="#EFF3FB" />
             <Columns>
                 <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" ReadOnly="True" SortExpression="EmployeeID" />
                 <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName" />
@@ -60,54 +57,20 @@
                 <asp:BoundField DataField="PopedomID" HeaderText="PopedomID" SortExpression="PopedomID" />
                 <asp:BoundField DataField="EmployeeMoreInfo" HeaderText="EmployeeMoreInfo" SortExpression="EmployeeMoreInfo" />
             </Columns>
-            <RowStyle BackColor="#EFF3FB" />
-            <EditRowStyle BackColor="#2461BF" />
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <EditRowStyle BackColor="#2461BF" />
             <AlternatingRowStyle BackColor="White" />
         </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:Supermarket Management SystemConnectionString4 %>"
-            SelectCommand="SELECT * FROM [Employee] WHERE (([EmployeeID] = @EmployeeID) AND ([EmployeeName] LIKE '%' + @EmployeeName + '%'))">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="TextBox10" Name="EmployeeID" PropertyName="Text"
-                    Type="String" />
-                <asp:ControlParameter ControlID="TextBox11" Name="EmployeeName" PropertyName="Text"
-                    Type="String" />
-            </SelectParameters>
-        </asp:SqlDataSource>
+        &nbsp;<br />
+        &nbsp;
+        &nbsp;&nbsp;<br />
         <br />
         <br />
         <br />
         <br />
-        <br />
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:EmpConnectionString %>"
-            DeleteCommand="DELETE FROM [Employee] WHERE [EmployeeID] = @EmployeeID" InsertCommand="INSERT INTO [Employee] ([EmployeeID], [EmployeeName], [SysLoginPwd], [Post], [EmployeeAddress], [EmployeePhone], [PopedomID], [EmployeeMoreInfo]) VALUES (@EmployeeID, @EmployeeName, @SysLoginPwd, @Post, @EmployeeAddress, @EmployeePhone, @PopedomID, @EmployeeMoreInfo)"
-            SelectCommand="SELECT * FROM [Employee]" UpdateCommand="UPDATE [Employee] SET [EmployeeName] = @EmployeeName, [SysLoginPwd] = @SysLoginPwd, [Post] = @Post, [EmployeeAddress] = @EmployeeAddress, [EmployeePhone] = @EmployeePhone, [PopedomID] = @PopedomID, [EmployeeMoreInfo] = @EmployeeMoreInfo WHERE [EmployeeID] = @EmployeeID">
-            <DeleteParameters>
-                <asp:Parameter Name="EmployeeID" Type="String" />
-            </DeleteParameters>
-            <UpdateParameters>
-                <asp:Parameter Name="EmployeeName" Type="String" />
-                <asp:Parameter Name="SysLoginPwd" Type="String" />
-                <asp:Parameter Name="Post" Type="String" />
-                <asp:Parameter Name="EmployeeAddress" Type="String" />
-                <asp:Parameter Name="EmployeePhone" Type="String" />
-                <asp:Parameter Name="PopedomID" Type="Int32" />
-                <asp:Parameter Name="EmployeeMoreInfo" Type="String" />
-                <asp:Parameter Name="EmployeeID" Type="String" />
-            </UpdateParameters>
-            <InsertParameters>
-                <asp:Parameter Name="EmployeeID" Type="String" />
-                <asp:Parameter Name="EmployeeName" Type="String" />
-                <asp:Parameter Name="SysLoginPwd" Type="String" />
-                <asp:Parameter Name="Post" Type="String" />
-                <asp:Parameter Name="EmployeeAddress" Type="String" />
-                <asp:Parameter Name="EmployeePhone" Type="String" />
-                <asp:Parameter Name="PopedomID" Type="Int32" />
-                <asp:Parameter Name="EmployeeMoreInfo" Type="String" />
-            </InsertParameters>
-        </asp:SqlDataSource>
         &nbsp;&nbsp;&nbsp;&nbsp;<br />
         <br />
         <br />
@@ -125,6 +88,40 @@
         <br />
         <br />
         <br />
+        <asp:SqlDataSource ID="SqlDataSource2" CancelSelectOnNullParameter="false" runat="server" ConnectionString="<%$ ConnectionStrings:MemberConnectionString %>"
+            SelectCommand="SELECT EmployeeID, EmployeeName, SysLoginPwd, Post, EmployeeAddress, EmployeePhone, PopedomID, EmployeeMoreInfo FROM Employee WHERE (EmployeeID = @EMPLOYEEID) OR (EmployeeName LIKE '%' + @EMPLOYEENAME + '%')">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="boxEmpId" Name="EMPLOYEEID" PropertyName="Text" DefaultValue="" />
+                <asp:ControlParameter ControlID="boxEmpName" Name="EMPLOYEENAME" PropertyName="Text" DefaultValue="" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" CancelSelectOnNullParameter="false" runat="server" ConnectionString="<%$ ConnectionStrings:EmpConnectionString %>"
+            DeleteCommand="DELETE FROM [Employee] WHERE [EmployeeID] = @EmployeeID" InsertCommand="INSERT INTO [Employee] ([EmployeeID], [EmployeeName], [SysLoginPwd], [Post], [EmployeeAddress], [EmployeePhone], [PopedomID], [EmployeeMoreInfo]) VALUES (@EmployeeID, @EmployeeName, @SysLoginPwd, @Post, @EmployeeAddress, @EmployeePhone, @PopedomID, @EmployeeMoreInfo)"
+            SelectCommand="SELECT * FROM [Employee]" UpdateCommand="UPDATE [Employee] SET [EmployeeName] = @EmployeeName, [SysLoginPwd] = @SysLoginPwd, [Post] = @Post, [EmployeeAddress] = @EmployeeAddress, [EmployeePhone] = @EmployeePhone, [PopedomID] = @PopedomID, [EmployeeMoreInfo] = @EmployeeMoreInfo WHERE [EmployeeID] = @EmployeeID">
+            <DeleteParameters>
+                <asp:Parameter Name="EmployeeID" Type="String" />
+            </DeleteParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="EmployeeName" Type="String" />
+                <asp:Parameter Name="SysLoginPwd" Type="String" />
+                <asp:Parameter Name="Post" Type="String" />
+                <asp:Parameter Name="EmployeeAddress" Type="String" />
+                <asp:Parameter Name="EmployeePhone" Type="String" />
+                <asp:Parameter Name="PopedomID" Type="String" />
+                <asp:Parameter Name="EmployeeMoreInfo" Type="String" />
+                <asp:Parameter Name="EmployeeID" Type="String" />
+            </UpdateParameters>
+            <InsertParameters>
+                <asp:Parameter Name="EmployeeID" Type="String" />
+                <asp:Parameter Name="EmployeeName" Type="String" />
+                <asp:Parameter Name="SysLoginPwd" Type="String" />
+                <asp:Parameter Name="Post" Type="String" />
+                <asp:Parameter Name="EmployeeAddress" Type="String" />
+                <asp:Parameter Name="EmployeePhone" Type="String" />
+                <asp:Parameter Name="PopedomID" Type="String" />
+                <asp:Parameter Name="EmployeeMoreInfo" Type="String" />
+            </InsertParameters>
+        </asp:SqlDataSource>
         <br />
         &nbsp;&nbsp;<br />
         <br />
