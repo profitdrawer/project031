@@ -13,6 +13,6 @@ public partial class Cashier_Error : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        this.Response.Write((string) Session["Error"]);
     }
 }

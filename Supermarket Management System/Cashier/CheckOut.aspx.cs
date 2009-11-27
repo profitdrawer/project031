@@ -13,81 +13,109 @@ using System.Data.SqlClient;
 public partial class Cashier_cashier : System.Web.UI.Page
 {
     private static string strConnect = System.Configuration.ConfigurationManager.AppSettings["connStr"];
+
+    private static DataTable goodsList;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            //初始化付款方式
+            initGoodsListTableSchema();
             initDealWay();
-            tbxEmployeeID.Text = (string) Session["EmployeeID"];
             initSellDate();
             btnInsert.Visible = true;
         }
-
+        gvBuyGoods.DataSource = goodsList;
+        gvBuyGoods.DataBind();
+        ifSucceedLabel.Text = "";
     }
 
+    /// <summary>
+    /// 初始化购物单表的Schema
+    /// </summary>
+    private void initGoodsListTableSchema()
+    {
+        // 初始化goodsListColumns的schema
+        goodsList = new DataTable();
+        DataColumnCollection goodsListColumns = goodsList.Columns;
+        goodsListColumns.Add(new DataColumn("GoodsID", typeof(string)));
+        goodsListColumns.Add(new DataColumn("GoodsName", typeof(string)));
+        goodsListColumns.Add(new DataColumn("Price", typeof(double)));
+        goodsListColumns.Add(new DataColumn("SellNum", typeof(int)));
+    }
+
+    /// <summary>
+    /// 初始化当前时间
+    /// </summary>
     private void initSellDate()
     {
         tbxSellDate.Text = DateTime.Now.ToString();
     }
 
-   private void initDealWay()
+    /// <summary>
+    /// 初始化付款方式
+    /// </summary>
+    private void initDealWay()
     {
         DrDpdealway.Items.Clear();
         DrDpdealway.Enabled = true;
-        DrDpdealway.Items.Add("<Not Set>");
         DrDpdealway.Items.Add("Cash");
         DrDpdealway.Items.Add("MemberCard");
         DrDpdealway.Items.Add("PendingOrder");
     }
 
-
-
     protected void btnBuy_Click(object sender, EventArgs e)
     {
-        /*SqlConnection objConnection = new SqlConnection(strConnect);
+        // 搜索符合条件的商品
+        SqlConnection objConnection = new SqlConnection(strConnect);
         SqlCommand objCommand = new SqlCommand("", objConnection);
 
         objCommand.CommandText = "SELECT GoodsID, GoodsName, ";
-           
 
         if (DrDpdealway.Text.Trim() == "Cash")
+        {
             objCommand.CommandText += "SellingPrice";
+        }
         else
-            if(DrDpdealway.Text.Trim() == "MemberCard" || DrDpdealway.Text.Trim() == "PendingOrder")
+        {
+            if (DrDpdealway.Text.Trim() == "MemberCard" || DrDpdealway.Text.Trim() == "PendingOrder")
                 objCommand.CommandText += "MemberPrice";
+        }
 
-        objCommand.CommandText += "FROM Commodity " + "WHERE GoodsID = @GOODSID";
+        objCommand.CommandText += " AS Price FROM Commodity " + " WHERE GoodsID = @GOODSID ";
 
         objCommand.Parameters.Add("GOODSID", SqlDbType.VarChar);
-
         objCommand.Parameters["GOODSID"].Value = tbxBuyGoodsID.Text.Trim();
 
-        DataSet objDataset = new DataSet();
-        SqlDataAdapter objAdapter = new SqlDataAdapter(objCommand);
-
-        try 
+        try
         {
-            if(objConnection.State == ConnectionState.Closed)
+            if (objConnection.State == ConnectionState.Closed)
                 objConnection.Open();
 
-            objAdapter.Fill(objDataset, "Commodity");
+            SqlDataReader reader = objCommand.ExecuteReader();
+            if (reader.Read())
+            {
+                DataRow newRow = goodsList.NewRow();
+                newRow["GoodsID"] = reader["GoodsID"];
+                newRow["GoodsName"] = reader["GoodsName"];
+                newRow["Price"] = reader["Price"];
+                newRow["SellNum"] = int.Parse(tbxSellNum.Text.Trim());
+                goodsList.Rows.Add(newRow);
+                gvBuyGoods.DataBind();
+            }
         }
-        catch(SqlException exp)
+        catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
+
         }
         finally
         {
-            if(objConnection.State == ConnectionState.Open)
-            {
+            //关闭数据库连接
+            if (objConnection.State == ConnectionState.Open)
                 objConnection.Close();
-            }
         }
-
-        gvBuyGoods.DataSource = objDataset.Tables["Commodity"];
-        gvBuyGoods.DataBind();*/
     }
 
     protected void LinkButton1_Click(object sender, EventArgs e)
@@ -112,20 +140,17 @@ public partial class Cashier_cashier : System.Web.UI.Page
         SqlConnection objConnection = new SqlConnection(strConnect);
         SqlCommand objCommand = new SqlCommand("", objConnection);
 
-        objCommand.CommandText = "INSERT INTO Sale (SellListID,GoodsID, SellNum, SellDateTime, Dealway, EmployeeID)" +
-            " VALUES ('@SELLLISTID', '@GOODSID', '@SELLNUM', '@SELLDATETIME', '@DEALWAY', '@EMPLOYEEID')";
+        objCommand.CommandText = "INSERT INTO Sale (SellListID, GoodsID, SellNum, Dealway, EmployeeID)" +
+            " VALUES (@SELLLISTID, @GOODSID, @SELLNUM, @DEALWAY, @EMPLOYEEID)";
 
-        objCommand.Parameters.Add("SELLLISTID",SqlDbType.VarChar);
-        objCommand.Parameters.Add("GOODSID",SqlDbType.VarChar);
-        objCommand.Parameters.Add("SELLNUM",SqlDbType.Int);
-        objCommand.Parameters.Add("SELLDATETIME",SqlDbType.DateTime);
-        objCommand.Parameters.Add("DEALWAY",SqlDbType.Int);
+        objCommand.Parameters.Add("SELLLISTID", SqlDbType.VarChar);
+        objCommand.Parameters.Add("GOODSID", SqlDbType.VarChar);
+        objCommand.Parameters.Add("SELLNUM", SqlDbType.Int);
+        objCommand.Parameters.Add("DEALWAY", SqlDbType.Int);
+        objCommand.Parameters.Add("EMPLOYEEID", SqlDbType.VarChar);
 
-        objCommand.Parameters["SELLLISTID"].Value = TextBox3.Text.Trim();
-        objCommand.Parameters["GOODSID"].Value = tbxBuyGoodsID.Text.Trim();
-        objCommand.Parameters["SELLNUM"].Value = TextBox1.Text.Trim();
-        objCommand.Parameters["SELLDATETIME"].Value = tbxSellDate.Text.Trim();
-        objCommand.Parameters["DEALWAY"].Value = 0;
+        objCommand.Parameters["SELLLISTID"].Value = tbxSellListId.Text.Trim();
+        objCommand.Parameters["DEALWAY"].Value = DrDpdealway.SelectedIndex;
         objCommand.Parameters["EMPLOYEEID"].Value = tbxEmployeeID.Text.Trim();
 
         try
@@ -133,22 +158,41 @@ public partial class Cashier_cashier : System.Web.UI.Page
             if (objConnection.State == ConnectionState.Closed)
                 objConnection.Open();
 
-            objCommand.ExecuteNonQuery();
-        }
+            SqlTransaction transaction = objConnection.BeginTransaction();
+            objCommand.Transaction = transaction;
 
+            foreach (DataRow row in goodsList.Rows)
+            {
+                objCommand.Parameters["GOODSID"].Value = row["GoodsID"];
+                objCommand.Parameters["SELLNUM"].Value = row["SellNum"];
+                objCommand.ExecuteNonQuery();
+            }
+
+            transaction.Commit();
+            ifSucceedLabel.Text = "成功购买！";
+            ClearAllTextBox();
+        }
         catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
-
         }
-
         finally
         {
             //关闭数据库连接
             if (objConnection.State == ConnectionState.Open)
                 objConnection.Close();
         }
+    }
 
+    private void ClearAllTextBox()
+    {
+        tbxBuyGoodsID.Text = "";
+        tbxEmployeeID.Text = "";
+        tbxSellDate.Text = "";
+        tbxSellListId.Text = "";
+        tbxSellNum.Text = "";
+        goodsList.Rows.Clear();
+        gvBuyGoods.DataBind();
     }
 }
