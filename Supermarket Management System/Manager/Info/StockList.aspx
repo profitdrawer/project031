@@ -80,8 +80,10 @@
         <br />
         <br />
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StockConnectionString %>"
-            DeleteCommand="DELETE FROM [Stock] WHERE [StockID] = @StockID" InsertCommand="INSERT INTO [Stock] ([StockID], [StockName], [StockAddress], [StockPhone], [StockMoreInfo]) VALUES (@StockID, @StockName, @StockAddress, @StockPhone, @StockMoreInfo)"
-            SelectCommand="SELECT * FROM [Stock]" UpdateCommand="UPDATE [Stock] SET [StockName] = @StockName, [StockAddress] = @StockAddress, [StockPhone] = @StockPhone, [StockMoreInfo] = @StockMoreInfo WHERE [StockID] = @StockID">
+            DeleteCommand="DELETE FROM [Stock] WHERE [StockID] = @StockID"
+            InsertCommand="INSERT INTO [Stock] ([StockID], [StockName], [StockAddress], [StockPhone], [StockMoreInfo]) VALUES (@StockID, @StockName, @StockAddress, @StockPhone, @StockMoreInfo)"
+            SelectCommand="SELECT * FROM [Stock]"
+            UpdateCommand="UPDATE [Stock] SET [StockName] = @StockName, [StockAddress] = @StockAddress, [StockPhone] = @StockPhone, [StockMoreInfo] = @StockMoreInfo WHERE [StockID] = @StockID">
             <DeleteParameters>
                 <asp:Parameter Name="StockID" Type="String" />
             </DeleteParameters>
@@ -120,7 +122,7 @@
             <br />
         新增数据<br />
         </strong>
-         <table width="414" height="217" border="0" cellpadding="0" cellspacing="0">
+         <table width="414" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td style="width: 108px; height: 19px;">&nbsp;仓库编号：</td>
     <td style="height: 19px; width: 150px;">&nbsp;<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox></td>
