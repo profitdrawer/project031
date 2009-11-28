@@ -1,7 +1,7 @@
 Bug 1 OK
 Bug 2.1 OK
-Bug 2.2
-Bug 2.3
+Bug 2.2 OK
+Bug 2.3 OK
 Bug 3.1 OK
 Bug 3.2 OK
 Bug 3.3 OK
@@ -25,3 +25,9 @@ Bug 10
 使用SqlDataSource自动生成SQL语句时，需要绑定SQL中某个参数到某个控件上，同时需要设置这个参数的DefaultValue，如果不设置DefaultValue则不能读出数据。对于Bug 3中的问题，如果不设置DefaultValue则不能读出数据，如果设置一个null值的话可能会出错，这时可以将以下参数加入到SqlDataSource中。
 CancelSelectOnNullParameter="false"
 参考：http://space.cnblogs.com/question/2715/
+
+对于Dealing表的说明：
+虽然数据库中有这个表，但是程序中并未使用到这个表。虽然这个表是有用且有意义的，但是现在没有任何程序的功能使用到了这个表，因此目前我不在Cashier结账过程中添加对这个表信息的更改。
+
+对于数据检查的说明：
+目前程序中没有任何数据检查的逻辑，也许会以后添加。
