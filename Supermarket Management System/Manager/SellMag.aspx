@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>销售信息列表</title>
+    <title>销售信息管理</title>
     <link href="../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -21,10 +21,12 @@
         <asp:GridView ID="gvSellList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
             BorderWidth="2px" CellPadding="3" CellSpacing="1"
-            GridLines="None" Style="z-index: 103; left: 14px; position: absolute; top: 79px"
-            Width="844px" Height="177px" DataSourceID="SqlDataSource1">
+            GridLines="None" Style="z-index: 103; left: 14px; position: absolute; top: 79px" DataSourceID="SqlDataSource1" DataKeyNames="SaleUniqueIdentifier">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+                <asp:BoundField DataField="SaleUniqueIdentifier" HeaderText="SaleUniqueIdentifier"
+                    InsertVisible="False" ReadOnly="True" SortExpression="SaleUniqueIdentifier" Visible="False" />
                 <asp:BoundField DataField="SellListID" HeaderText="SellListID" SortExpression="SellListID" />
                 <asp:BoundField DataField="GoodsID" HeaderText="GoodsID" SortExpression="GoodsID" />
                 <asp:BoundField DataField="SellNum" HeaderText="SellNum" SortExpression="SellNum" />
@@ -57,16 +59,29 @@
         <br />
         <br />
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GoodsSellingConnectionString %>" InsertCommand="INSERT INTO [Sale] ([SellListID], [GoodsID], [SellNum], [SellDateTime], [Dealway], [DealID], [EmployeeID]) VALUES (@SellListID, @GoodsID, @SellNum, @SellDateTime, @Dealway, @DealID, @EmployeeID)"
-            SelectCommand="SELECT * FROM [Sale]">
+            SelectCommand="SELECT * FROM [Sale]" DeleteCommand="DELETE FROM [Sale] WHERE [SaleUniqueIdentifier] = @SaleUniqueIdentifier" UpdateCommand="UPDATE [Sale] SET [SellListID] = @SellListID, [GoodsID] = @GoodsID, [SellNum] = @SellNum, [SellDateTime] = @SellDateTime, [Dealway] = @Dealway, [DealID] = @DealID, [EmployeeID] = @EmployeeID WHERE [SaleUniqueIdentifier] = @SaleUniqueIdentifier">
             <InsertParameters>
                 <asp:Parameter Name="SellListID" Type="String" />
                 <asp:Parameter Name="GoodsID" Type="String" />
                 <asp:Parameter Name="SellNum" Type="Int32" />
-                <asp:Parameter Name="SellDateTime" Type="Object" />
+                <asp:Parameter DbType="Date" Name="SellDateTime" />
                 <asp:Parameter Name="Dealway" Type="Int32" />
                 <asp:Parameter Name="DealID" Type="String" />
                 <asp:Parameter Name="EmployeeID" Type="String" />
             </InsertParameters>
+            <DeleteParameters>
+                <asp:Parameter Name="SaleUniqueIdentifier" Type="Int64" />
+            </DeleteParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="SellListID" Type="String" />
+                <asp:Parameter Name="GoodsID" Type="String" />
+                <asp:Parameter Name="SellNum" Type="Int32" />
+                <asp:Parameter DbType="Date" Name="SellDateTime" />
+                <asp:Parameter Name="Dealway" Type="Int32" />
+                <asp:Parameter Name="DealID" Type="String" />
+                <asp:Parameter Name="EmployeeID" Type="String" />
+                <asp:Parameter Name="SaleUniqueIdentifier" Type="Int64" />
+            </UpdateParameters>
         </asp:SqlDataSource>
         <br />
         <br />
@@ -94,7 +109,7 @@
         <br />
         <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True"
             CellPadding="4" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None"
-            Style="left: -1px; position: relative; top: -49px" Width="890px" AutoGenerateColumns="False">
+            Style="left: -1px; position: relative; top: -49px" AutoGenerateColumns="False">
             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
             <RowStyle BackColor="#EFF3FB" />
             <EditRowStyle BackColor="#2461BF" />

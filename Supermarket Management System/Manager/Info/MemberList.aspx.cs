@@ -13,9 +13,9 @@ using System.Data.SqlClient;
 public partial class Manager_Info_MemData : System.Web.UI.Page
 {
     private static string strConnect = System.Configuration.ConfigurationManager.AppSettings["connStr"];
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 
     protected void btnInsert_Click(object sender, EventArgs e)
@@ -41,16 +41,16 @@ public partial class Manager_Info_MemData : System.Web.UI.Page
         objCommand.Parameters.Add("CONSUMERPOINTS", SqlDbType.Int);
 
         //Sql语句参数赋值
-        objCommand.Parameters["MEMID"].Value = TextBox1.Text.Trim();
-        objCommand.Parameters["MEMNAME"].Value = TextBox2.Text.Trim();
-        objCommand.Parameters["CARDSTATE"].Value = RadioButton1.Checked.ToString();
-        objCommand.Parameters["CARDPWD"].Value = TextBox4.Text.Trim();
-        objCommand.Parameters["MEMADD"].Value = TextBox5.Text.Trim();
-        objCommand.Parameters["MEMPHONE"].Value = TextBox6.Text.Trim();
-        objCommand.Parameters["ENROLLDATE"].Value = TextBox7.Text.Trim();
-        objCommand.Parameters["ADVANCEPAY"].Value = TextBox10.Text.Trim();
-        objCommand.Parameters["TOTALCOST"].Value = TextBox9.Text.Trim();
-        objCommand.Parameters["CONSUMERPOINTS"].Value = TextBox11.Text.Trim();
+        objCommand.Parameters["MEMID"].Value = tbxMemberID.Text.Trim();
+        objCommand.Parameters["MEMNAME"].Value = tbxMemberName.Text.Trim();
+        objCommand.Parameters["CARDSTATE"].Value = radCardStatus.Checked.ToString();
+        objCommand.Parameters["CARDPWD"].Value = tbxCardPwd.Text.Trim();
+        objCommand.Parameters["MEMADD"].Value = tbxMemberAddress.Text.Trim();
+        objCommand.Parameters["MEMPHONE"].Value = tbxMemberPhone.Text.Trim();
+        objCommand.Parameters["ENROLLDATE"].Value = tbxEnrollDate.Text.Trim();
+        objCommand.Parameters["ADVANCEPAY"].Value = tbxAdvancePayment.Text.Trim();
+        objCommand.Parameters["TOTALCOST"].Value = tbxTotalCost.Text.Trim();
+        objCommand.Parameters["CONSUMERPOINTS"].Value = tbxConsumerPoints.Text.Trim();
 
 
         try
@@ -64,20 +64,17 @@ public partial class Manager_Info_MemData : System.Web.UI.Page
             //插入数据
             objCommand.ExecuteNonQuery();
         }
-
         catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
 
         }
-
         finally
         {
             //关闭数据库连接
             if (objConnection.State == ConnectionState.Open)
                 objConnection.Close();
         }
-
     }
 }

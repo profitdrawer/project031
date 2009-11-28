@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>员工信息管理</title>
     <link href="../../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -26,6 +26,7 @@
             GridLines="None" Style="z-index: 103; left: 10px; position: absolute; top: 317px" DataKeyNames="EmployeeID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                 <asp:BoundField DataField="EmployeeID" HeaderText="EmployeeID" ReadOnly="True" SortExpression="EmployeeID" />
                 <asp:BoundField DataField="EmployeeName" HeaderText="EmployeeName" SortExpression="EmployeeName" />
                 <asp:BoundField DataField="SysLoginPwd" HeaderText="SysLoginPwd" SortExpression="SysLoginPwd" />
@@ -97,7 +98,8 @@
         </asp:SqlDataSource>
         <asp:SqlDataSource ID="SqlDataSource1" CancelSelectOnNullParameter="false" runat="server" ConnectionString="<%$ ConnectionStrings:EmpConnectionString %>"
             DeleteCommand="DELETE FROM [Employee] WHERE [EmployeeID] = @EmployeeID" InsertCommand="INSERT INTO [Employee] ([EmployeeID], [EmployeeName], [SysLoginPwd], [Post], [EmployeeAddress], [EmployeePhone], [PopedomID], [EmployeeMoreInfo]) VALUES (@EmployeeID, @EmployeeName, @SysLoginPwd, @Post, @EmployeeAddress, @EmployeePhone, @PopedomID, @EmployeeMoreInfo)"
-            SelectCommand="SELECT * FROM [Employee]" UpdateCommand="UPDATE [Employee] SET [EmployeeName] = @EmployeeName, [SysLoginPwd] = @SysLoginPwd, [Post] = @Post, [EmployeeAddress] = @EmployeeAddress, [EmployeePhone] = @EmployeePhone, [PopedomID] = @PopedomID, [EmployeeMoreInfo] = @EmployeeMoreInfo WHERE [EmployeeID] = @EmployeeID">
+            SelectCommand="SELECT * FROM [Employee]"
+            UpdateCommand="UPDATE [Employee] SET [EmployeeName] = @EmployeeName, [SysLoginPwd] = @SysLoginPwd, [Post] = @Post, [EmployeeAddress] = @EmployeeAddress, [EmployeePhone] = @EmployeePhone, [PopedomID] = @PopedomID, [EmployeeMoreInfo] = @EmployeeMoreInfo WHERE [EmployeeID] = @EmployeeID">
             <DeleteParameters>
                 <asp:Parameter Name="EmployeeID" Type="String" />
             </DeleteParameters>
@@ -147,6 +149,7 @@
         <br />
         <strong>
         新增数据<br />
+        </strong>
             <br />
             <table style="z-index: 115; left: 93px; width: 452px; position: absolute; top: 760px;
                 height: 237px">
@@ -225,7 +228,7 @@
             </table>
             <br />
         <br />
-        </strong>&nbsp;
+        &nbsp;
         <asp:Button ID="btnInsert" runat="server" Style="z-index: 114; left: 662px; position: absolute;
             top: 1118px" Text="添加" OnClick="btnInsert_Click" />
       

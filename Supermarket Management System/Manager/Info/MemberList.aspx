@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>会员信息管理</title>
     <link href="../../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -18,7 +18,7 @@
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp;&nbsp;
         <asp:Button ID="btnSearch" runat="server" Style="z-index: 102; left: 324px; position: absolute;
-            top: 51px" Text="Search"  />      
+            top: 51px" Text="Search" Width="100px"  />      
         <br />
         <asp:GridView ID="gvMemberList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
@@ -27,6 +27,7 @@
             Width="844px"  Height="1px" DataKeyNames="MemberID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                 <asp:BoundField DataField="MemberID" HeaderText="MemberID" ReadOnly="True" SortExpression="MemberID" />
                 <asp:BoundField DataField="MemberName" HeaderText="MemberName" SortExpression="MemberName" />
                 <asp:CheckBoxField DataField="Cardstate" HeaderText="Cardstate" SortExpression="Cardstate" />
@@ -47,8 +48,8 @@
         <br />
         <asp:TextBox ID="TextBox3" runat="server" Style="left: 130px; position: relative;
             top: -62px"></asp:TextBox><br />
-        &nbsp;<asp:TextBox ID="TextBox8" runat="server" Style="left: 130px; position: relative;
-            top: -54px"></asp:TextBox>
+        &nbsp;<asp:TextBox ID="TextBox8" runat="server" Style="left: 126px; position: relative;
+            top: -55px"></asp:TextBox>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4"
             DataKeyNames="MemberID" DataSourceID="SqlDataSource3" ForeColor="#333333" GridLines="None">
             <RowStyle BackColor="#EFF3FB" />
@@ -186,90 +187,90 @@
         <strong>
         新增数据<br />
             <br />
-            <table style="width: 458px">
+            <table style="width: 458px; border-right: #000000 thin solid; border-top: #000000 thin solid; border-left: #000000 thin solid; border-bottom: #000000 thin solid;">
                 <tr>
                     <td style="width: 101px; height: 35px">
                         会员编号:</td>
-                    <td style="width: 10px; height: 35px">
-                        <asp:TextBox ID="TextBox1" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 35px">
+                        <asp:TextBox ID="tbxMemberID" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 30px">
                         会员姓名:</td>
-                    <td style="width: 10px; height: 30px">
-                        <asp:TextBox ID="TextBox2" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 30px">
+                        <asp:TextBox ID="tbxMemberName" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         会员卡状态:</td>
-                    <td style="width: 10px; height: 25px">
-                        <asp:RadioButton ID="RadioButton1" runat="server" Style="position: relative" Text="使用"
+                    <td style="width: 3px; height: 25px">
+                        <asp:RadioButton ID="radCardStatus" runat="server" Style="position: relative" Text="使用中"
                             Width="160px" /></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         会员卡密码:</td>
-                    <td style="width: 10px; height: 25px">
-                        <asp:TextBox ID="TextBox4" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 25px">
+                        <asp:TextBox ID="tbxCardPwd" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 24px">
                         会员联系地址:</td>
-                    <td style="width: 10px; height: 24px">
-                        <asp:TextBox ID="TextBox5" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 24px">
+                        <asp:TextBox ID="tbxMemberAddress" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 24px">
                         会员联系电话:</td>
-                    <td style="width: 10px; height: 24px">
-                        <asp:TextBox ID="TextBox6" runat="server" Style="z-index: 100; left: 2px; position: relative;
+                    <td style="width: 3px; height: 24px">
+                        <asp:TextBox ID="tbxMemberPhone" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 3px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         注册日期:</td>
-                    <td style="width: 10px; height: 25px">
-                        <asp:TextBox ID="TextBox7" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 25px">
+                        <asp:TextBox ID="tbxEnrollDate" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         充值金额:</td>
-                    <td style="width: 10px; height: 25px">
-                        &nbsp;<asp:TextBox ID="TextBox10" runat="server" Style="z-index: 102; left: 0px; position: relative;
-                            top: 0px"></asp:TextBox></td>
+                    <td style="width: 3px; height: 25px">
+                        &nbsp;<asp:TextBox ID="tbxAdvancePayment" runat="server" Style="z-index: 102; left: 0px; position: relative;
+                            top: -7px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         消费累计:</td>
-                    <td style="width: 10px; height: 25px">
-                        <asp:TextBox ID="TextBox9" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 25px">
+                        <asp:TextBox ID="tbxTotalCost" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 25px">
                         消费积分:</td>
-                    <td style="width: 10px; height: 25px">
-                        <asp:TextBox ID="TextBox11" runat="server" Style="z-index: 100; left: 0px; position: relative;
+                    <td style="width: 3px; height: 25px">
+                        <asp:TextBox ID="tbxConsumerPoints" runat="server" Style="z-index: 100; left: 0px; position: relative;
                             top: 0px"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td style="width: 101px; height: 92px">
                         备注信息:</td>
-                    <td style="width: 10px; height: 92px">
-                        <asp:TextBox ID="TextBox12" runat="server" Height="86px" Style="position: static"
+                    <td style="width: 3px; height: 92px">
+                        <asp:TextBox ID="tbxMemberMoreInfo" runat="server" Height="86px" Style="position: static"
                             Width="149px"></asp:TextBox></td>
                 </tr>
             </table>
             <br />
         <br />
         </strong>&nbsp;
-        <asp:Button ID="btnInsert" runat="server" Style="z-index: 114; left: 70px; position: absolute;
-            top: 1379px" Text="添加" OnClick="btnInsert_Click" />
+        <asp:Button ID="btnInsert" runat="server" Style="z-index: 114; left: 478px; position: absolute;
+            top: 1245px" Text="添加" OnClick="btnInsert_Click" Width="130px" />
       
     </div>
     </form>

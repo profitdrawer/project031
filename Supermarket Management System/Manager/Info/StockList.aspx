@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>仓库信息管理</title>
     <link href="../../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -25,7 +25,7 @@
             Width="796px"  Height="177px" DataKeyNames="StockID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                 <asp:BoundField DataField="StockID" HeaderText="StockID" ReadOnly="True" SortExpression="StockID" />
                 <asp:BoundField DataField="StockName" HeaderText="StockName" SortExpression="StockName" />
                 <asp:BoundField DataField="StockAddress" HeaderText="StockAddress" SortExpression="StockAddress" />

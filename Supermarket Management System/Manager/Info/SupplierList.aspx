@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>商品供应商管理</title>
     <link href="../../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -26,7 +26,7 @@
             Width="796px"  Height="177px" DataKeyNames="SupplierID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                 <asp:BoundField DataField="SupplierID" HeaderText="SupplierID" ReadOnly="True" SortExpression="SupplierID" />
                 <asp:BoundField DataField="SupplierName" HeaderText="SupplierName" SortExpression="SupplierName" />
                 <asp:BoundField DataField="SupplierAddress" HeaderText="SupplierAddress" SortExpression="SupplierAddress" />
@@ -126,7 +126,7 @@
         新增数据<br />
         <br />
         </strong>
-         <table width="414" height="217" border="0" cellpadding="0" cellspacing="0">
+         <table width="414" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td style="width: 108px; height: 19px;">&nbsp;供应商编号：</td>
     <td style="height: 19px; width: 133px;">&nbsp;<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox></td>

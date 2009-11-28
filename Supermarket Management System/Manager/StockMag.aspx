@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Untitled Page</title>
+    <title>商品库存管理</title>
     <link href="../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -15,17 +15,16 @@
         </strong>显示所有： &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-        <asp:Button ID="btnSearch" runat="server" Style="z-index: 102; left: 262px; position: absolute;
-            top: 417px" Text="Search"  />      
+        <asp:Button ID="btnSearch" runat="server" Style="z-index: 102; left: 288px; position: absolute;
+            top: 392px" Text="Search" Width="80px"  />      
         <br />
         <asp:GridView ID="gvGoodsStockingList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
             BorderWidth="2px" CellPadding="3" CellSpacing="1"
-            GridLines="None" Style="z-index: 103; left: 45px; position: absolute; top: 80px"
-            Width="844px" Height="177px" DataKeyNames="StockListID" DataSourceID="SqlDataSource1">
+            GridLines="None" Style="z-index: 103; left: 45px; position: absolute; top: 80px" DataKeyNames="StockListID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
-                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowSelectButton="True" />
+                <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                 <asp:BoundField DataField="StockListID" HeaderText="StockListID" ReadOnly="True"
                     SortExpression="StockListID" />
                 <asp:BoundField DataField="StockID" HeaderText="StockID" SortExpression="StockID" />
@@ -33,7 +32,7 @@
                 <asp:BoundField DataField="StockDate" HeaderText="StockDate" SortExpression="StockDate" />
                 <asp:BoundField DataField="Amount" HeaderText="Amount" SortExpression="Amount" />
                 <asp:BoundField DataField="ProduceDate" HeaderText="ProduceDate" SortExpression="ProduceDate" />
-                <asp:BoundField DataField="shelflife" HeaderText="shelflife" SortExpression="shelflife" />
+                <asp:BoundField DataField="ShelfLife" HeaderText="ShelfLife" SortExpression="ShelfLife" />
                 <asp:BoundField DataField="PurchasePrice" HeaderText="PurchasePrice" SortExpression="PurchasePrice" />
             </Columns>
             <RowStyle BackColor="#DEDFDE" ForeColor="Black" />
@@ -87,11 +86,11 @@
         <br />
         <br />
         <br />
-        &nbsp;入库单编号：<br />
+        &nbsp;按入库单编号查询：<br />
         <strong>
             <br />
-            <asp:TextBox ID="TextBox9" runat="server" Style="left: 85px; position: relative;
-                top: -40px"></asp:TextBox><br />
+            <asp:TextBox ID="TextBox9" runat="server" Style="left: 115px; position: relative;
+                top: -38px"></asp:TextBox><br />
             <br />
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4"
                 DataKeyNames="StockListID" DataSourceID="SqlDataSource2" ForeColor="#333333"
@@ -105,7 +104,7 @@
                     <asp:BoundField DataField="StockDate" HeaderText="StockDate" SortExpression="StockDate" />
                     <asp:BoundField DataField="Amount" HeaderText="Amount" SortExpression="Amount" />
                     <asp:BoundField DataField="ProduceDate" HeaderText="ProduceDate" SortExpression="ProduceDate" />
-                    <asp:BoundField DataField="shelflife" HeaderText="shelflife" SortExpression="shelflife" />
+                    <asp:BoundField DataField="ShelfLife" HeaderText="ShelfLife" SortExpression="ShelfLife" />
                     <asp:BoundField DataField="PurchasePrice" HeaderText="PurchasePrice" SortExpression="PurchasePrice" />
                 </Columns>
                 <RowStyle BackColor="#EFF3FB" />
@@ -183,8 +182,8 @@
                     <asp:TextBox ID="TextBox8" runat="server" Style="position: relative"></asp:TextBox></td>
             </tr>
         </table>
-        <asp:Button ID="btnInsert" runat="server" Style="z-index: 114; left: 87px; position: absolute;
-            top: 803px" Text="添加" OnClick="btnInsert_Click" />
+        <asp:Button ID="btnInsert" runat="server" Style="z-index: 114; left: 264px; position: absolute;
+            top: 804px" Text="添加" OnClick="btnInsert_Click" Width="100px" />
       
     </div>
     </form>
