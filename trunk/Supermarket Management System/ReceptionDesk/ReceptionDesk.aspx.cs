@@ -15,18 +15,22 @@ public partial class ReceptionDesk_ReceptionDesk : System.Web.UI.Page
     {
 
     }
+
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
-        Response.Redirect("AddAvancePay.aspx");
+        Response.Redirect("AddAdvancePay.aspx");
     }
+
     protected void LinkButton3_Click(object sender, EventArgs e)
     {
         Response.Redirect("Region.aspx");
     }
+
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
         Response.Redirect("Refund.aspx");
     }
+
     protected void linkLogout_Click(object sender, EventArgs e)
     {
         Session.Remove("EmployeeID");

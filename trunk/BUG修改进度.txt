@@ -18,8 +18,8 @@ Bug 7.1
 Bug 7.2
 Bug 8.1
 Bug 8.2
-Bug 9
-Bug 10
+Bug 9   OK
+Bug 10  OK
 
 对于Bug 3的说明：
 使用SqlDataSource自动生成SQL语句时，需要绑定SQL中某个参数到某个控件上，同时需要设置这个参数的DefaultValue，如果不设置DefaultValue则不能读出数据。对于Bug 3中的问题，如果不设置DefaultValue则不能读出数据，如果设置一个null值的话可能会出错，这时可以将以下参数加入到SqlDataSource中。
@@ -31,3 +31,9 @@ CancelSelectOnNullParameter="false"
 
 对于数据检查的说明：
 目前程序中没有任何数据检查的逻辑，也许会以后添加。
+
+关于存货的说明：
+购买后存货应该减少，但是应该怎么减少还待讨论，目前收银员收银之后存货没有变化。
+
+关于退货的说明：
+退货后对于会员卡的支付应该返还其现金，不过现在还没做。

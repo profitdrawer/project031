@@ -257,6 +257,10 @@ public partial class Cashier_cashier : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// 得到gvGoodsList中所有商品的总价格
+    /// </summary>
+    /// <returns></returns>
     private decimal GetTotalCost()
     {
         int dealway = DrDpDealway.SelectedIndex;
