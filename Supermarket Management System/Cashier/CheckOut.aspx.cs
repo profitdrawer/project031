@@ -201,4 +201,12 @@ public partial class Cashier_cashier : System.Web.UI.Page
         goodsList.Rows.Clear();
         gvBuyGoods.DataBind();
     }
+
+    protected void linkLogout_Click(object sender, EventArgs e)
+    {
+        Session.Remove("EmployeeID");
+        Session.Remove("SysLoginPwd");
+        Session.Remove("RoleName");
+        Response.Redirect("../Login.aspx");
+    }
 }

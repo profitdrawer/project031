@@ -27,4 +27,11 @@ public partial class ReceptionDesk_ReceptionDesk : System.Web.UI.Page
     {
         Response.Redirect("Refund.aspx");
     }
+    protected void linkLogout_Click(object sender, EventArgs e)
+    {
+        Session.Remove("EmployeeID");
+        Session.Remove("SysLoginPwd");
+        Session.Remove("RoleName");
+        Response.Redirect("../Login.aspx");
+    }
 }
