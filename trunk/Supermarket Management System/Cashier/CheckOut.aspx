@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Checkout</title>
+    <title>售货员页面</title>
     <link href="../style/StyleSheet.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -22,8 +22,8 @@
         <asp:Label ID="Label3" runat="server" Style="z-index: 105; left: 81px; position: absolute;
             top: 94px" Text="商品ID"></asp:Label>
         <asp:Label ID="ifSucceedLabel" runat="server" Style="z-index: 105; left: 561px; position: absolute;
-            top: 213px"></asp:Label>
-        &nbsp;
+            top: 213px" Font-Bold="True"></asp:Label>
+        &nbsp;&nbsp;
         <asp:TextBox ID="tbxEmployeeID" runat="server" Style="z-index: 106; left: 141px; position: absolute;
             top: 266px"></asp:TextBox>
         <asp:Label ID="Label4" runat="server" Style="z-index: 107; left: 70px; position: absolute;
@@ -41,8 +41,8 @@
         <asp:DropDownList ID="DrDpdealway" runat="server" Style="z-index: 117; left: 375px;
             position: absolute; top: 263px" Width="149px">
         </asp:DropDownList>
-        <asp:LinkButton ID="LinkButton1" runat="server" Style="left: 622px; position: absolute;
-            top: 16px" OnClick="LinkButton1_Click">商品搜索</asp:LinkButton>
+        <asp:LinkButton ID="linkSearchGoods" runat="server" Style="left: 622px; position: absolute;
+            top: 16px" OnClick="LinkButton1_Click" Font-Bold="True">商品搜索</asp:LinkButton>
         <asp:Label ID="Label5" runat="server" Style="left: 94px; position: absolute; top: 153px"
             Text="数量"></asp:Label>
         <asp:TextBox ID="tbxSellNum" runat="server" Style="left: 138px; position: absolute;
@@ -60,7 +60,8 @@
         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
         <asp:Button ID="btnInsert" runat="server" OnClick="btnInsert_Click" Style="left: 558px;
             position: absolute; top: 264px" Text="购物单结账" Width="103px" />&nbsp;
-        </div>
+        <asp:LinkButton ID="linkLogout" runat="server" Style="left: 23px; position: absolute;
+            top: 18px" OnClick="linkLogout_Click" Font-Bold="True">注销登陆</asp:LinkButton></div>
     </form>
 </body>
 </html>

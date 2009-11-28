@@ -5,10 +5,10 @@ Bug 2.3
 Bug 3.1 OK
 Bug 3.2 OK
 Bug 3.3 OK
-Bug 4.1
-Bug 4.2
-Bug 4.3
-Bug 5
+Bug 4.1 OK
+Bug 4.2 OK
+Bug 4.3 OK
+Bug 5   OK
 Bug 6.1
 Bug 6.2
 Bug 6.3

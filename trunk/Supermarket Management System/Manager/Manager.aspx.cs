@@ -47,4 +47,11 @@ public partial class Manager_Manager : System.Web.UI.Page
     {
         Response.Redirect("StockMag.aspx");
     }
+    protected void linkLogout_Click(object sender, EventArgs e)
+    {
+        Session.Remove("EmployeeID");
+        Session.Remove("SysLoginPwd");
+        Session.Remove("RoleName");
+        Response.Redirect("../Login.aspx");
+    }
 }
