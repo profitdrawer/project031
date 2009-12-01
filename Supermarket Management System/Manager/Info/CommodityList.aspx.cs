@@ -60,15 +60,15 @@ public partial class Manager_CommodityData : System.Web.UI.Page
 
             //插入数据
             objCommand.ExecuteNonQuery();
-        }
 
+            gvCommodityList.DataBind();
+        }
         catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
 
         }
-
         finally
         {
             //关闭数据库连接

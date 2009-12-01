@@ -63,6 +63,9 @@ public partial class Manager_Info_MemData : System.Web.UI.Page
 
             //≤Â»Î ˝æ›
             objCommand.ExecuteNonQuery();
+
+            GridView1.DataBind();
+            gvMemberList.DataBind();
         }
         catch (SqlException exp)
         {

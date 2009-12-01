@@ -24,7 +24,7 @@ public partial class Manager_SupplierMag : System.Web.UI.Page
         SqlConnection objConnection = new SqlConnection(strConnect);
         //数据库命令
         SqlCommand objCommand = new SqlCommand("", objConnection);
-        //设置Sql语句，插入会员输入的注册信息
+        //设置Sql语句，插入商品供应单
         objCommand.CommandText = "INSERT INTO GoodsProviding " + "(ListID, GoodsID, SupplierID, NeedNum, ListDate, AffordMoney)"
             + "VALUES" + "(@LIST, @GOODS, @SUPPLIER, @NUM, @DATE, @MONEY)";
 
@@ -54,15 +54,16 @@ public partial class Manager_SupplierMag : System.Web.UI.Page
 
             //插入数据
             objCommand.ExecuteNonQuery();
-        }
 
+            GridView1.DataBind();
+            gvGoodsProvidingList.DataBind();
+        }
         catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
 
         }
-
         finally
         {
             //关闭数据库连接
