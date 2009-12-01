@@ -56,15 +56,16 @@ public partial class Manager_StockMag : System.Web.UI.Page
 
             //插入数据
             objCommand.ExecuteNonQuery();
-        }
 
+            GridView1.DataBind();
+            gvStockList.DataBind();
+        }
         catch (SqlException exp)
         {
             Session["Error"] = exp.Message;
             Response.Redirect("Error.aspx");
 
         }
-
         finally
         {
             //关闭数据库连接
