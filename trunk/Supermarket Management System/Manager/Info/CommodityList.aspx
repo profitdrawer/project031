@@ -10,7 +10,8 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <strong>商品信息列表<br />
+        <strong>
+            商品信息列表<br />
             <br />
         </strong>查询条件： &nbsp; 商品ID： &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -21,7 +22,7 @@
         <asp:GridView ID="gvCommodityList" runat="server" AllowPaging="True" AllowSorting="True"
             AutoGenerateColumns="False" BackColor="White" BorderColor="White" BorderStyle="Ridge"
             BorderWidth="2px" CellPadding="3" CellSpacing="1"
-            GridLines="None" Style="z-index: 103; left: 40px; position: absolute; top: 156px"
+            GridLines="None" Style="z-index: 103; left: 40px; position: absolute; top: 158px"
             Width="844px"  Height="177px" DataKeyNames="GoodsID" DataSourceID="SqlDataSource1">
             <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
             <Columns>
