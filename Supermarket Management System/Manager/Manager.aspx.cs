@@ -54,4 +54,12 @@ public partial class Manager_Manager : System.Web.UI.Page
         Session.Remove("RoleName");
         Response.Redirect("../Login.aspx");
     }
+    protected void LinkButton9_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void LinkButton10_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Info/MemberLevel.aspx");
+    }
 }

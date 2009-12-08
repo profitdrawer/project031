@@ -15,6 +15,10 @@ public partial class Cashier_cashier : System.Web.UI.Page
     private static string strConnect = System.Configuration.ConfigurationManager.AppSettings["connStr"];
 
     private static DataTable goodsList;
+    private static DataTable priceList;
+    private static decimal totalPrice;
+    private static int reviewPriceBtnState = 0;
+    private static decimal remainAmount;
 
     /// <summary>
     /// 初始化页面
@@ -23,13 +27,25 @@ public partial class Cashier_cashier : System.Web.UI.Page
     {
         InitDealWay();
         InitSellDate();
-        lblOrderStatus.Text = "";
-        Session["EmployeeID"] = "630072001";
-        tbxCashierID.Text = (string) Session["EmployeeID"];
+
+        // 设置会员卡输入隐藏
         lblMemberID.Visible = false;
         tbxMemberID.Visible = false;
         lblCardPwd.Visible = false;
         tbxCardPwd.Visible = false;
+
+        // 设置查看总价按钮及其附属label
+        lblViewPrice.Visible = false;
+        lblTotalPrice.Visible = false;
+        lblCardRemainAmount.Visible = false;
+        lblRemain.Visible = false;
+        btnReviewPrice.Text = "查看总价";
+        reviewPriceBtnState = 0;
+
+        // 设置结账按钮及其附属label
+
+        // 设置收银员ID
+        tbxCashierID.Text = (string) Session["EmployeeID"];
     }
 
     protected void Page_Load(object sender, EventArgs e)
@@ -37,13 +53,34 @@ public partial class Cashier_cashier : System.Web.UI.Page
         if (!IsPostBack)
         {
             InitGoodsListTableSchema();
+            InitPriceListTableSchema();
             InitPage();
         }
 
         SetDealwayDrDp();
 
+        lblOrderStatus.Text = "";
+
         gvBuyGoods.DataSource = goodsList;
         gvBuyGoods.DataBind();
+        gvGoodsPrice.DataSource = priceList;
+        gvGoodsPrice.DataBind();
+    }
+
+    /// <summary>
+    /// 初始化价格单表的Schema
+    /// </summary>
+    private void InitPriceListTableSchema()
+    {
+        // 初始化priceListColumns的schema
+        priceList = new DataTable();
+        DataColumnCollection priceListColumns = priceList.Columns;
+        priceListColumns.Clear();
+        priceListColumns.Add(new DataColumn("GoodsID", typeof(string)));
+        priceListColumns.Add(new DataColumn("GoodsName", typeof(string)));
+        priceListColumns.Add(new DataColumn("SellNum", typeof(int)));
+        priceListColumns.Add(new DataColumn("PerPrice", typeof(decimal)));
+        priceListColumns.Add(new DataColumn("TotalPrice", typeof(decimal)));
     }
 
     private void SetDealwayDrDp()
@@ -76,7 +113,6 @@ public partial class Cashier_cashier : System.Web.UI.Page
         goodsListColumns.Add(new DataColumn("GoodsID", typeof(string)));
         goodsListColumns.Add(new DataColumn("GoodsName", typeof(string)));
         goodsListColumns.Add(new DataColumn("CashPrice", typeof(decimal)));
-        goodsListColumns.Add(new DataColumn("MemberPrice", typeof(decimal)));
         goodsListColumns.Add(new DataColumn("SellNum", typeof(int)));
     }
 
@@ -100,14 +136,14 @@ public partial class Cashier_cashier : System.Web.UI.Page
         DrDpDealway.Items.Add("PendingOrder");
     }
 
-    protected void btnBuy_Click(object sender, EventArgs e)
+    protected void btnAddToList_Click(object sender, EventArgs e)
     {
         // 搜索符合条件的商品
         SqlConnection objConnection = new SqlConnection(strConnect);
         SqlCommand objCommand = new SqlCommand("", objConnection);
 
         objCommand.CommandText = 
-            "SELECT GoodsID, GoodsName, SellingPrice AS CashPrice, MemberPrice FROM Commodity WHERE GoodsID = @GOODSID ";
+            "SELECT GoodsID, GoodsName, SellingPrice AS CashPrice FROM Commodity WHERE GoodsID = @GOODSID ";
         objCommand.Parameters.Add("GOODSID", SqlDbType.VarChar);
         objCommand.Parameters["GOODSID"].Value = tbxBuyGoodsID.Text.Trim();
 
@@ -124,7 +160,6 @@ public partial class Cashier_cashier : System.Web.UI.Page
                 newRow["GoodsID"] = reader["GoodsID"];
                 newRow["GoodsName"] = reader["GoodsName"];
                 newRow["CashPrice"] = reader["CashPrice"];
-                newRow["MemberPrice"] = reader["MemberPrice"];
                 newRow["SellNum"] = int.Parse(tbxSellNum.Text.Trim());
                 goodsList.Rows.Add(newRow);
                 gvBuyGoods.DataBind();
@@ -148,8 +183,11 @@ public partial class Cashier_cashier : System.Web.UI.Page
         Response.Redirect("GoodsSearch.aspx");
     }
 
-    protected void btnInsert_Click(object sender, EventArgs e)
+    protected void btnBuy_Click(object sender, EventArgs e)
     {
+        // 如果尚未查看价格则不进行任何操作
+        if (reviewPriceBtnState == 0) return;
+
         // 如果购物单中没有东西则不进行任何操作
         if (goodsList.Rows.Count == 0) return;
 
@@ -169,40 +207,21 @@ public partial class Cashier_cashier : System.Web.UI.Page
         objCommand.Parameters["DEALWAY"].Value = DrDpDealway.SelectedIndex;
         objCommand.Parameters["EMPLOYEEID"].Value = tbxCashierID.Text.Trim();
 
+        int dealWay = DrDpDealway.SelectedIndex;
         try
         {
             if (objConnection.State == ConnectionState.Closed)
                 objConnection.Open();
 
-            // 计算总金额
-            decimal totalCost = GetTotalCost();
-            decimal remainAmount = 0;
-
             // 会员卡付账
-            if (DrDpDealway.SelectedIndex == 1)
+            if (dealWay == 1)
             {
-                // 确认身份信息
-                SqlCommand getMemberInfoCommand =
-                    new SqlCommand("SELECT * FROM Member WHERE MemberID = @MemberID", objConnection);
-                getMemberInfoCommand.Parameters.Add("MemberID", SqlDbType.VarChar);
-                getMemberInfoCommand.Parameters["MemberID"].Value = tbxMemberID.Text;
-                SqlDataReader reader = getMemberInfoCommand.ExecuteReader();
-                if (reader.Read() == false || (string)reader["CardPwd"] != tbxCardPwd.Text)
-                {
-                    lblOrderStatus.Text = "会员ID或密码错误！";
-                    objConnection.Close();
-                    return;
-                }
-
-                // 确认余额
-                remainAmount = (decimal)reader["AdvancePayment"];
-                if (remainAmount < totalCost)
+                if (remainAmount < totalPrice)
                 {
                     lblOrderStatus.Text = "会员卡余额不足！";
                     objConnection.Close();
                     return;
                 }
-                reader.Close();
             }
 
             // 用事务进行操作
@@ -217,18 +236,21 @@ public partial class Cashier_cashier : System.Web.UI.Page
                 objCommand.ExecuteNonQuery();
             }
 
-            // 写回余额，并增加累计消费值
-            SqlCommand updateMemberInfoCommand = new SqlCommand(
-                "UPDATE Member SET AdvancePayment = @RemainAmount, TotalCost = TotalCost + @Payment " +
-                "WHERE MemberID = @MemberID", objConnection);
-            updateMemberInfoCommand.Transaction = transaction;
-            updateMemberInfoCommand.Parameters.Add("RemainAmount", SqlDbType.Decimal);
-            updateMemberInfoCommand.Parameters.Add("MemberID", SqlDbType.VarChar);
-            updateMemberInfoCommand.Parameters.Add("Payment", SqlDbType.Decimal);
-            updateMemberInfoCommand.Parameters["RemainAmount"].Value = remainAmount - totalCost;
-            updateMemberInfoCommand.Parameters["MemberID"].Value = tbxMemberID.Text;
-            updateMemberInfoCommand.Parameters["Payment"].Value = totalCost;
-            updateMemberInfoCommand.ExecuteNonQuery();
+            if (dealWay == 1)
+            {
+                // 写回余额，并增加累计消费值
+                SqlCommand updateMemberInfoCommand = new SqlCommand(
+                    "UPDATE Member SET AdvancePayment = @RemainAmount, TotalCost = TotalCost + @Payment " +
+                    "WHERE MemberID = @MemberID", objConnection);
+                updateMemberInfoCommand.Transaction = transaction;
+                updateMemberInfoCommand.Parameters.Add("RemainAmount", SqlDbType.Decimal);
+                updateMemberInfoCommand.Parameters.Add("MemberID", SqlDbType.VarChar);
+                updateMemberInfoCommand.Parameters.Add("Payment", SqlDbType.Decimal);
+                updateMemberInfoCommand.Parameters["RemainAmount"].Value = remainAmount - totalPrice;
+                updateMemberInfoCommand.Parameters["MemberID"].Value = tbxMemberID.Text;
+                updateMemberInfoCommand.Parameters["Payment"].Value = totalPrice;
+                updateMemberInfoCommand.ExecuteNonQuery();
+            }
 
             transaction.Commit();
 
@@ -241,8 +263,20 @@ public partial class Cashier_cashier : System.Web.UI.Page
             InitPage();
 
             // 修改购买情况
-            if (DrDpDealway.SelectedIndex != 2) lblOrderStatus.Text = "成功购买！";
+            if (dealWay != 2)
+            {
+                lblOrderStatus.Text = "成功购买！";
+                if (dealWay == 1)
+                {
+                    lblOrderStatus.Text += "会员卡余额：" + Convert.ToString(remainAmount - totalPrice);
+                }
+            }
             else lblOrderStatus.Text = "成功压单！";
+
+            // 修改页面控件
+            SetModifiableControlEnable(true);
+            priceList.Clear();
+            gvGoodsPrice.DataBind();
         }
         catch (SqlException exp)
         {
@@ -255,32 +289,6 @@ public partial class Cashier_cashier : System.Web.UI.Page
             if (objConnection.State == ConnectionState.Open)
                 objConnection.Close();
         }
-    }
-
-    /// <summary>
-    /// 得到gvGoodsList中所有商品的总价格
-    /// </summary>
-    /// <returns></returns>
-    private decimal GetTotalCost()
-    {
-        int dealway = DrDpDealway.SelectedIndex;
-        decimal totalCost = 0;
-
-        if (dealway == 1)   // 会员卡支付
-        {
-            foreach (DataRow row in goodsList.Rows)
-            {
-                totalCost += (decimal)row["MemberPrice"] * (int)row["SellNum"];
-            }
-        }
-        else
-        {
-            foreach (DataRow row in goodsList.Rows)
-            {
-                totalCost += (decimal)row["CashPrice"] * (int)row["SellNum"];
-            }
-        }
-        return totalCost;
     }
 
     /// <summary>
@@ -309,5 +317,109 @@ public partial class Cashier_cashier : System.Web.UI.Page
     {
         goodsList.Rows.RemoveAt(e.RowIndex);
         gvBuyGoods.DataBind();
+    }
+
+    private void SetModifiableControlEnable(bool state)
+    {
+        DrDpDealway.Enabled = state;
+        tbxSellNum.Enabled = state;
+        tbxCardPwd.Enabled = state;
+        tbxMemberID.Enabled = state;
+        tbxBuyGoodsID.Enabled = state;
+        tbxSellListId.Enabled = state;
+        btnAddToList.Enabled = state;
+        gvBuyGoods.Enabled = state;
+    }
+
+    protected void btnReviewPrice_Click(object sender, EventArgs e)
+    {
+        lblReviewPriceStatus.Text = "";
+
+        // 如果购物单中没有东西则不进行任何操作
+        if (goodsList.Rows.Count == 0) return;
+
+        if (reviewPriceBtnState == 0)
+        {
+            SqlConnection conn = new SqlConnection(strConnect);
+            conn.Open();
+
+            int discountPercent = 0;
+            if (DrDpDealway.SelectedIndex == 1)
+            {
+                // 确认身份信息
+                SqlCommand getMemberInfoCommand =
+                    new SqlCommand("SELECT * FROM Member WHERE MemberID = @MemberID", conn);
+                getMemberInfoCommand.Parameters.Add("MemberID", SqlDbType.VarChar);
+                getMemberInfoCommand.Parameters["MemberID"].Value = tbxMemberID.Text;
+                SqlDataReader reader = getMemberInfoCommand.ExecuteReader();
+                if (reader.Read() == false || (string)reader["CardPwd"] != tbxCardPwd.Text)
+                {
+                    lblReviewPriceStatus.Text = "会员ID或密码错误！";
+                    conn.Close();
+                    return;
+                }
+                remainAmount = (decimal)reader["AdvancePayment"];
+                reader.Close();
+
+                // 计算折扣率
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT DiscountByPercent FROM Member, MemberLevel " +
+                    "WHERE Member.TotalCost >= MemberLevel.PaymentRequirement " +
+                      "AND Member.MemberID = @MemberId " +
+                    "ORDER BY MemberLevel DESC", conn);
+                cmd.Parameters.Add("MemberId", SqlDbType.VarChar);
+                cmd.Parameters["MemberId"].Value = tbxMemberID.Text.Trim();
+                Object result = cmd.ExecuteScalar();
+                if (result == null) discountPercent = 0;
+                else discountPercent = (int)result;
+                conn.Close();
+
+                lblCardRemainAmount.Text = Convert.ToString(remainAmount);
+                lblCardRemainAmount.Visible = true;
+                lblRemain.Visible = true;
+            }
+
+            // 填充priceList表内容，并计算总价
+            totalPrice = 0;
+            priceList.Clear();
+            foreach (DataRow row in goodsList.Rows)
+            {
+                DataRow newRow = priceList.NewRow();
+                newRow["GoodsID"] = row["GoodsID"];
+                newRow["GoodsName"] = row["GoodsName"];
+                newRow["SellNum"] = row["SellNum"];
+                decimal price = ((decimal)row["CashPrice"]) / 100 * (100 - discountPercent);
+                decimal grossPrice = price * (int)row["SellNum"];
+                totalPrice += grossPrice;
+                newRow["PerPrice"] = price;
+                newRow["TotalPrice"] = grossPrice;
+                priceList.Rows.Add(newRow);
+                gvGoodsPrice.DataBind();
+            }
+
+            lblTotalPrice.Text = Convert.ToString(totalPrice);
+
+            SetModifiableControlEnable(false);
+            reviewPriceBtnState = 1;
+            btnReviewPrice.Text = "取消";
+
+            lblViewPrice.Visible = true;
+            lblTotalPrice.Visible = true;
+        }
+        else
+        {
+            SetModifiableControlEnable(true);
+            priceList.Clear();
+            gvGoodsPrice.DataBind();
+            reviewPriceBtnState = 0;
+            btnReviewPrice.Text = "查看总价";
+            lblTotalPrice.Text = "";
+            lblReviewPriceStatus.Text = "";
+
+            lblCardRemainAmount.Visible = false;
+            lblRemain.Visible = false;
+            lblViewPrice.Visible = false;
+            lblTotalPrice.Visible = false;
+        }
     }
 }

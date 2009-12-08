@@ -21,8 +21,8 @@
             left: 32px; position: absolute; top: 315px" Text="搜索" Width="85px" />
         &nbsp;
         <asp:GridView ID="gvCommoditySearch" runat="server" AutoGenerateColumns="False" CellPadding="4"
-            ForeColor="#333333" GridLines="None" Height="289px" Style="z-index: 104; left: 329px;
-            position: absolute; top: 64px" Width="805px" DataKeyNames="GoodsID" DataSourceID="goods" OnSelectedIndexChanged="gvCommoditySearch_SelectedIndexChanged">
+            ForeColor="#333333" GridLines="None" Height="289px" Style="z-index: 104; left: 327px;
+            position: absolute; top: 119px" Width="805px" DataKeyNames="GoodsID" DataSourceID="goods" OnSelectedIndexChanged="gvCommoditySearch_SelectedIndexChanged">
             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
             <RowStyle BackColor="#EFF3FB" />
             <EditRowStyle BackColor="#2461BF" />
@@ -31,16 +31,18 @@
             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
             <AlternatingRowStyle BackColor="White" />
             <Columns>
+                <asp:CommandField ShowSelectButton="True" />
                 <asp:BoundField DataField="GoodsID" HeaderText="GoodsID" ReadOnly="True" SortExpression="GoodsID" />
                 <asp:BoundField DataField="GoodsName" HeaderText="GoodsName" SortExpression="GoodsName" />
                 <asp:BoundField DataField="SellingPrice" HeaderText="SellingPrice" SortExpression="SellingPrice" />
-                <asp:BoundField DataField="MemberPrice" HeaderText="MemberPrice" SortExpression="MemberPrice" />
-                <asp:CheckBoxField DataField="sellstate" HeaderText="sellstate" SortExpression="sellstate" />
+                <asp:BoundField DataField="StockNum" HeaderText="StockNum" SortExpression="StockNum" />
+                <asp:BoundField DataField="AlarmNum" HeaderText="AlarmNum" SortExpression="AlarmNum" />
+                <asp:CheckBoxField DataField="Sellstate" HeaderText="Sellstate" SortExpression="Sellstate" />
                 <asp:BoundField DataField="GoodsMoreInfo" HeaderText="GoodsMoreInfo" SortExpression="GoodsMoreInfo" />
             </Columns>
         </asp:GridView>
         <asp:SqlDataSource ID="goods" runat="server" ConnectionString="<%$ ConnectionStrings:goodsConnectionString %>"
-            SelectCommand="SELECT [GoodsID], [GoodsName], [SellingPrice], [MemberPrice], [sellstate], [GoodsMoreInfo] FROM [Commodity] WHERE (([GoodsName] LIKE '%' + @GoodsName + '%') AND ([SellingPrice] >= @SellingPrice) AND ([SellingPrice] <= @SellingPrice2)) ORDER BY [GoodsID]">
+            SelectCommand="SELECT * FROM [Commodity] WHERE (([GoodsName] LIKE '%' + @GoodsName + '%') AND ([SellingPrice] >= @SellingPrice) AND ([SellingPrice] <= @SellingPrice2)) ORDER BY [GoodsID]">
             <SelectParameters>
                 <asp:ControlParameter ControlID="tbxCommodityName" Name="GoodsName" PropertyName="Text"
                     Type="String" />
@@ -63,11 +65,10 @@
             top: 264px" Text="~"></asp:Label>
         <asp:Label ID="Label6" runat="server" Style="z-index: 110; left: 238px; position: absolute;
             top: 264px" Text="元"></asp:Label>
-        <asp:Button ID="btnClearSearch" runat="server" Height="24px" OnClick="btnClearSearch_Click"
+        <asp:Button ID="btnClearSearch" runat="server" OnClick="btnClearSearch_Click"
             Style="z-index: 112; left: 172px; position: absolute; top: 314px" Text="取消" Width="85px" />
-        
-    
-    </div>
+        <asp:Button ID="btnRegisterGoodsShortage" runat="server" Text="登记缺货"
+            Style="z-index: 112; left: 330px; position: absolute; top: 65px" Height="25px" OnClick="btnRegisterGoodsShortage_Click" Width="79px"/></div>
     </form>
 </body>
 </html>
